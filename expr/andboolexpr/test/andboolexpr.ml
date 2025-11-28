@@ -40,9 +40,9 @@ let%test "test_bigstep15" = test_bigstep "(false and false) or true" true
 
 let%test "test_bigstep16" = test_bigstep "true or (false and false)" true
 
-let%test "test_bigstep17" = test_bigstep "if true then true else false and false" true
+let%test "test_bigstep17" = test_bigstep "if true then true else (false and false)" true
 
-let%test "test_bigstep18" = test_bigstep "if true then false else false or true" false
+let%test "test_bigstep18" = test_bigstep "if true then false else (false or true)" false
 
 
 (**********************************************************************
@@ -94,6 +94,6 @@ let%test "test_smallstep15" = test_smallstep "(false and false) or true" (Some t
 
 let%test "test_smallstep16" = test_smallstep "true or (false and false)" (Some true)
 
-let%test "test_smallstep17" = test_smallstep "if true then true else false and false" (Some true)
+let%test "test_smallstep17" = test_smallstep "if true then true else (false and false)" (Some true)
 
-let%test "test_smallstep18" = test_smallstep "if true then false else false or true" (Some false)
+let%test "test_smallstep18" = test_smallstep "if true then false else (false or true)" (Some false)
