@@ -22,9 +22,13 @@ let rec trace1 e = match e with
         If(True,e1,_) -> e1
       | If(False,_,e2) -> e2
       | If(e1,e2,e3) -> let e' = trace1 e1 in If(e',e2,e3)
-      | Not(e1) -> Not(trace1 e1)
-      | Or(e1,e2) -> Or(trace1 e1,e2)
       | And(e1,e2) -> if (e1 = True) then e2 else (if (e1 = False) then False else And(trace1 e1,e2))
+      | Or(True,_) -> True
+      | Or(False,e1) -> e1
+      | Or(e1,e2) -> Or(trace1 e1,e2)
+      | Not(True) -> False
+      | Not(False) -> True
+      | Not(e1) -> Not(trace1 e1)
       | _ -> raise NoRuleApplies
 
 let rec trace e = try
@@ -36,7 +40,7 @@ let rec trace e = try
 let rec eval b = match b with
       | True -> true
       | False -> false
-      | Not(b) -> not (eval b)
+      | Not(b1) -> not (eval b1)
       | And(b1,b2) -> eval b1 && eval b2
       | Or(b1,b2) -> eval b1 || eval b2
-      | If(b1, b2, b3) -> if (eval b1) then (eval b2) else (eval b3)
+      | If(b1,b2,b3) -> if (eval b1) then (eval b2) else (eval b3)
