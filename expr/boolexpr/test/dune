@@ -1,2 +1,5 @@
-(test
- (name test_boolexpr))
+(library
+ (name boolexpr)
+ (inline_tests)
+ (preprocess (pps ppx_inline_test))
+ (libraries boolexprLib))
